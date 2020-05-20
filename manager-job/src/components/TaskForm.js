@@ -20,6 +20,22 @@ class TaskForm extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps && nextProps.taskEditing) {
+            this.setState({
+                id: nextProps.taskEditing.id,
+                name: nextProps.taskEditing.name,
+                status: nextProps.taskEditing.status
+            })
+        }else if(nextProps && nextProps.taskEditing === null){
+            this.setState({
+                id: '',
+                name: '',
+                status: false
+            })
+        }
+    }
+
     onChange = (event) => {
         var target = event.target,
             name = target.name,
@@ -35,6 +51,9 @@ class TaskForm extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         this.props.onSubmit(this.state);
+
+        this.onClear();
+        this.onCloseForm();
     }
 
     onCloseForm = () => {

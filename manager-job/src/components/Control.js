@@ -6,7 +6,7 @@ class Control extends Component {
     render(){
         return (
             <div className="row mt-3">
-                <Search />
+                <Search onSearch={ this.props.onSearch } />
                 <Sort />
             </div>
         );
