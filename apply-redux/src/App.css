@@ -1,0 +1,11 @@
+.table tr td {
+  vertical-align: middle;
+}
+
+.blue {
+  color: #007bff;
+}
+
+.red {
+  color: #dc3545;
+}

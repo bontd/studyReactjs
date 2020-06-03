@@ -7,6 +7,8 @@ import TaskList from './components/TaskList';
 
 import {findIndex} from 'lodash';
 
+import demo from './trainning/demo';
+
 class App extends Component {
     constructor(props){
         super(props);
