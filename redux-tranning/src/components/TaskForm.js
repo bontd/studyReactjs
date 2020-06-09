@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import * as actions from './../actions/index';
 
 class TaskForm extends Component {
     constructor(props){
@@ -13,25 +11,23 @@ class TaskForm extends Component {
     }
 
     componentWillMount() {
-        if(this.props.itemEditing) {
+        if(this.props.taskEditing) {
             this.setState({
-                id: this.props.itemEditing.id,
-                name: this.props.itemEditing.name,
-                status: this.props.itemEditing.status
+                id: this.props.taskEditing.id,
+                name: this.props.taskEditing.name,
+                status: this.props.taskEditing.status
             })
-        }else {
-            this.onClear();
         }
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps && nextProps.itemEditing) {
+        if(nextProps && nextProps.taskEditing) {
             this.setState({
-                id: nextProps.itemEditing.id,
-                name: nextProps.itemEditing.name,
-                status: nextProps.itemEditing.status
+                id: nextProps.taskEditing.id,
+                name: nextProps.taskEditing.name,
+                status: nextProps.taskEditing.status
             })
-        }else if(nextProps && nextProps.itemEditing === null){
+        }else if(nextProps && nextProps.taskEditing === null){
             this.setState({
                 id: '',
                 name: '',
@@ -54,19 +50,23 @@ class TaskForm extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.onSaveTask(this.state);
+        this.props.onSubmit(this.state);
 
         this.onClear();
         this.onCloseForm();
     }
 
     onCloseForm = () => {
+        this.setState({
+            id: '',
+            name: '',
+            status: false
+        })
         this.props.onCloseForm();
     }
 
     onClear = () => {
         this.setState({
-            id: '',
             name: '',
             status: false
         })
@@ -74,7 +74,6 @@ class TaskForm extends Component {
 
     render(){
         var { id } = this.state;
-        if(!this.props.isDisplayForm ) return null;
         return (
             <div className="card">
                 <div className="card-header">
@@ -111,23 +110,5 @@ class TaskForm extends Component {
         );
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        isDisplayForm : state.isDisplayForm,
-        itemEditing : state.itemEditing
-    }
-};
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        onSaveTask : (task) => {
-            dispatch(actions.saveTask(task));
-        },
-        onCloseForm : () => {
-            dispatch(actions.closeForm());
-        }
-    }
-}
  
-export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
+export default TaskForm;
